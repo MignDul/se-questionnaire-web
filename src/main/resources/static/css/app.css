@@ -37,6 +37,52 @@
     margin-right: 10px;
 }
 
+/* questionnaire/view.html
+-------------------------------------------------- */
+
+.questionnaire-view-page {
+    background-color: #f0f0f0;
+}
+
+.questionnaire-wrapper {
+    width: 100%;
+    min-width: 930px;
+    border: 1px solid #dadada;
+    position: relative;
+    background-color: #fff;
+    font-size: 14px;
+    line-height: 1.8em;
+    margin: 50px auto;
+}
+
+.questionnaire-wrapper .inner {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 910px;
+    padding: 20px 0;
+}
+
+.questionnaire-title {
+    text-align: center;
+}
+
+.question-container {
+    padding-top: 20px;
+}
+
+.required-indicator {
+    font-weight: 700;
+    color: #f00;
+    margin-left: 5px;
+}
+
+.question-container .question.required .question-content:after {
+    content: '*';
+    font-weight: 700;
+    color: #f00;
+    margin-left: 5px;
+}
+
 /* Responsive CSS
 -------------------------------------------------- */
 
@@ -46,5 +92,17 @@
         margin-bottom: 20px;
         font-size: 21px;
         line-height: 1.4;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .questionnaire-wrapper {
+        width: auto;
+        min-width: inherit;
+        min-height: 400px;
+    }
+    .questionnaire-wrapper .inner {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }

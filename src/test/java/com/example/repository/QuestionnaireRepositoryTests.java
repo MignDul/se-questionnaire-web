@@ -44,14 +44,14 @@ public class QuestionnaireRepositoryTests {
 
         // check questions
         List<Question> questions = questionnaire.getQuestions();
-        assertThat(questions.size()).isEqualTo(3);
-        Question firstQuestion = questions.get(0);
-        assertThat(firstQuestion.getType()).isEqualTo(QuestionType.MULTIPLE_CHOICE);
-        assertThat(firstQuestion.isRequired()).isTrue();
-        assertThat(firstQuestion.isHasOthersOption()).isTrue();
+        assertThat(questions.size()).isEqualTo(4);
+        Question multipleChoiceQuestion = questions.get(1);
+        assertThat(multipleChoiceQuestion.getType()).isEqualTo(QuestionType.MULTIPLE_CHOICE);
+        assertThat(multipleChoiceQuestion.isRequired()).isTrue();
+        assertThat(multipleChoiceQuestion.isHasOthersOption()).isTrue();
 
         // check options
-        List<Option> options = firstQuestion.getOptions();
+        List<Option> options = multipleChoiceQuestion.getOptions();
         assertThat(options.size()).isEqualTo(3);
         assertThat(options.get(0).getText()).isEqualTo("C/C++");
     }
