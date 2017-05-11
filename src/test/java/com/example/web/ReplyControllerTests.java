@@ -47,7 +47,7 @@ public class ReplyControllerTests {
         answers.add(genderAnswer);
         given(replyRepository.findOne(3L)).willReturn(reply);
 
-        mvc.perform(get("/reply/3"))
+        mvc.perform(get("/replies/3"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("A Test Questionnaire")))
                 .andExpect(content().string(containsString("12312341234")))

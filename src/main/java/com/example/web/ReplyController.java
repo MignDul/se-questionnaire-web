@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 
 @Controller
-@RequestMapping("/reply")
+@RequestMapping("/replies")
 public class ReplyController {
 
     @Autowired
