@@ -4,15 +4,15 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="icon" th:href="@{/favicon.ico}" href="../static/favicon.ico"/>
+    <link rel="icon" th:href="@{/favicon.ico}" href="../../static/favicon.ico"/>
 
-    <title>About</title>
+    <title>Submit Success</title>
 
     <!-- Bootstrap core CSS -->
-    <link type="text/css" th:href="@{/css/bootstrap-3.3.7.min.css}" href="../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/bootstrap-3.3.7.min.css}" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/app.css}" href="../../static/css/app.css" rel="stylesheet"/>
 </head>
 <body class="page">
 <!-- Navigation bar
@@ -27,14 +27,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/}" href="index.html">Questionnaire</a>
+            <a class="navbar-brand" th:href="@{/}" href="../index.html">Questionnaire</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/}" href="index.html">Home</a></li>
+                <li><a th:href="@{/}" href="../index.html">Home</a></li>
                 <li><a href="#create">Create</a></li>
                 <li><a href="#mine">Mine</a></li>
-                <li class="active"><a th:href="@{/about}" href="about.html">About</a></li>
+                <li><a th:href="@{/about}" href="../about.html">About</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -44,23 +44,25 @@
     ================================================== -->
 <div class="container">
     <div class="container-wrapper">
-        <img th:src="@{/images/logo.png}" src="../static/images/logo.png"/>
-        <h1 class="title">Questionnaire</h1>
+        <img th:src="@{/images/success.png}" src="../../static/images/success.png"/>
+        <h1 class="title">Thank You</h1>
         <p class="lead">
-            This is an example for 2017 software engineering course.<br/>
-            For anonymous, one can fill in the questionnaire and view the results. For authenticated,
-            besides filling and viewing the results, one can also create a new questionnaire and view
-            the detail of every reply.
+            Your reply was submitted successfully.
         </p>
-        <p class="lead">
-            This is open sourced under the <a href="https://mit-license.org/" target="_blank">MIT License</a>.
-            Please checkout from <a href="#" target="_blank">GitHub</a>.
-        </p>
+        <div class="page-actions">
+            <a th:href="@{/}" href="../index.html" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-home"></span> Take Me Home
+            </a>
+            <a th:href="@{'/questionnaires/' + ${questionnaireId} + '/analysis'}"
+               href="analysis.html" class="btn btn-primary btn-lg">
+                <span class="glyphicon glyphicon-circle-arrow-right"></span> View Analysis
+            </a>
+        </div>
     </div>
 </div><!-- /.container -->
 
 <!-- Place JavaScript at the end of the document so the pages load faster -->
-<script th:src="@{/js/jquery-1.12.4.min.js}" src="../static/js/jquery-1.12.4.min.js"></script>
-<script th:src="@{/js/bootstrap-3.3.7.min.js}" src="../static/js/bootstrap-3.3.7.min.js"></script>
+<script th:src="@{/js/jquery-1.12.4.min.js}" src="../../static/js/jquery-1.12.4.min.js"></script>
+<script th:src="@{/js/bootstrap-3.3.7.min.js}" src="../../static/js/bootstrap-3.3.7.min.js"></script>
 </body>
 </html>
