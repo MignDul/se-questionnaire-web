@@ -30,7 +30,10 @@ public class QuestionnaireController {
 
     @GetMapping("/{id}")
     public ModelAndView getQuestionnaire(@PathVariable("id") Long id) {
-        Questionnaire questionnaire = questionnaireRepository.findOne(id);
+        Questionnaire questionnaire = null;
+        if (id != null) {
+            questionnaire = questionnaireRepository.findOne(id);
+        }
         if (questionnaire == null) {
             throw new QuestionnaireNotFoundException(id);
         }
