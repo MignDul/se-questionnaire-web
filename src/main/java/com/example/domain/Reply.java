@@ -22,7 +22,7 @@ public class Reply {
 
     protected Reply() {}
 
-    public Reply(Long id) {
+    protected Reply(Long id) {
         this.id = id;
     }
 

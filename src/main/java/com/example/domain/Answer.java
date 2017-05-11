@@ -23,7 +23,7 @@ public class Answer {
 
     protected Answer() {}
 
-    public Answer(Long id) {
+    protected Answer(Long id) {
         this.id = id;
     }
 

@@ -34,6 +34,9 @@ public class QuestionnaireRepositoryTests {
     @Autowired
     private OptionRepository optionRepository;
 
+    @Autowired
+    private ReplyRepository replyRepository;
+
     @Test
     public void testDataExisted() throws Exception {
         List<Questionnaire> data = new ArrayList<>();
@@ -61,6 +64,7 @@ public class QuestionnaireRepositoryTests {
         long countBeforeDelete = questionnaireRepository.count();
         assertThat(countBeforeDelete).isEqualTo(1L);
 
+        replyRepository.deleteAll();
         // Cascade delete.
         questionnaireRepository.delete(1L);
 

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 2 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="icon" th:href="@{/favicon.ico}" href="../../static/favicon.ico"/>
+
+    <title>Reply</title>
+
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" th:href="@{/css/bootstrap-3.3.7.min.css}" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" th:href="@{/css/app.css}" href="../../static/css/app.css" rel="stylesheet"/>
+</head>
+<body class="page questionnaire-view-page">
+<!-- Navigation bar
+    ================================================== -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/}" href="../index.html">Questionnaire</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}" href="../index.html">Home</a></li>
+                <li><a href="#create">Create</a></li>
+                <li><a href="#mine">Mine</a></li>
+                <li><a th:href="@{/about}" href="../about.html">About</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<!-- Container
+    ================================================== -->
+<div class="container">
+    <div class="questionnaire-wrapper">
+        <div class="inner">
+            <div class="questionnaire-title">
+                <h2 th:text="${questionnaire.title}">A Questionnaire about Software Development Experience</h2>
+            </div>
+            <div class="questionnaire-description">
+                <p th:if="${questionnaire.description}" th:text="${questionnaire.description}">
+                    Hello, everyone! I'm Lu Mingming, TA of software engineering course. To prepare the
+                    "Coding Tools - Java" lecture content, I made this questionnaire. I hope you can
+                    take a few minutes to complete this questionnaire. Thank you for your cooperation!
+                </p>
+                <p>
+                    NOTICE: <span class="required-indicator">*</span> means that question is required to answer.
+                </p>
+            </div>
+            <div class="question-container">
+                <fieldset disabled="disabled" th:object="${replyForm}">
+                    <div class="form-group question"
+                         th:each="question,iter : ${questionnaire.questions}"
+                         th:switch="${question.type.name()}"
+                         th:classappend="${question.required}? 'required'">
+                        <div>
+                            <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">1.</span>
+                            <span class="question-content" th:text="${question.title}">Student Number:</span>
+                        </div>
+
+                        <!--/* Single Line Text
+                            ================================================== */-->
+                        <div th:case="'SINGLE_LINE_TEXT'">
+                            <p class="form-control"
+                               th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">
+                                0000000
+                            </p>
+                        </div>
+
+                        <!--/* Multiple Choice
+                            ================================================== */-->
+                        <div th:case="'MULTIPLE_CHOICE'">
+                            <div class="checkbox" th:each="option : ${question.options}">
+                                <label>
+                                    <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="${option.sequenceNumber}"/>
+                                    <span th:text="${option.text}">C/C++</span>
+                                </label>
+                            </div>
+                            <!--/*-->
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/>
+                                    <span th:text="${option.text}">Java</span>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/>
+                                    <span th:text="${option.text}">PHP</span>
+                                </label>
+                            </div>
+                            <!--*/-->
+                            <div class="checkbox" th:if="${question.hasOthersOption}">
+                                <label>
+                                    <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="-1"/>
+                                    <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
+                                    <p class="form-control"
+                                       th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">
+                                        Python
+                                    </p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!--/* Single Choice
+                            ================================================== */-->
+                        <div th:case="'SINGLE_CHOICE'">
+                            <div class="radio" th:each="option : ${question.options}">
+                                <label>
+                                    <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="${option.sequenceNumber}"/>
+                                    <span th:text="${option.text}">Yes</span>
+                                </label>
+                            </div>
+                            <!--/*-->
+                            <div class="radio">
+                                <label>
+                                    <input type="radio"/>
+                                    <span th:text="${option.text}">No</span>
+                                </label>
+                            </div>
+                            <!--*/-->
+                            <div class="radio" th:if="${question.hasOthersOption}">
+                                <label>
+                                    <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="-1"/>
+                                    <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
+                                    <p class="form-control"
+                                       th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">
+                                        Not Sure
+                                    </p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!--/* Multi-line Text
+                            ================================================== */-->
+                        <div th:case="'MULTIPLE_LINE_TEXT'">
+                            <p class="form-control"
+                               th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">
+                                Something...
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+            </div><!-- /.question-container -->
+        </div><!-- /.inner -->
+    </div><!-- /.questionnaire-wrapper -->
+</div><!-- /.container -->
+
+<!-- Place JavaScript at the end of the document so the pages load faster -->
+<script th:src="@{/js/jquery-1.12.4.min.js}" src="../../static/js/jquery-1.12.4.min.js"></script>
+<script th:src="@{/js/bootstrap-3.3.7.min.js}" src="../../static/js/bootstrap-3.3.7.min.js"></script>
+</body>
+</html>

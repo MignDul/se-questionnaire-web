@@ -25,3 +25,15 @@ insert into option(question_id, sequence_number, `text`) values (3, 0, 'Yes');
 insert into option(question_id, sequence_number, `text`) values (3, 1, 'No');
 
 insert into question(questionnaire_id, sequence_number, type, title, required, has_others_option, others_option_text) values (1, 3, 3, 'If you have participated in some projects or developed a software by yourself, please write down these experience in the box below.', FALSE, FALSE, NULL);
+
+insert into reply(questionnaire_id, created_at) values (1, '2017-05-02 12:00:00');
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (1, 1, NULL, '1300000');
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (1, 2, 1, NULL);
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (1, 2, -1, 'Python');
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (1, 3, 0, NULL);
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (1, 4, NULL, 'I am good at programming.');
+
+insert into reply(questionnaire_id, created_at) values (1, '2017-05-02 12:10:00');
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (2, 1, NULL, '1300001');
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (2, 2, 0, NULL);
+insert into answer(reply_id, question_id, option_sequence_number, `text`) values (2, 3, 1, NULL);
