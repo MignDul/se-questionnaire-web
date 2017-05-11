@@ -59,112 +59,108 @@
                 </p>
             </div>
             <div class="question-container">
-                <form th:action="@{'/questionnaires/' + ${questionnaire.id}}" action="#" method="post">
-                    <!--/*/ <th:block th:each="question : ${questionnaire.questions}" th:switch="${question.type.name()}"> /*/-->
+                <form th:action="@{'/questionnaires/' + ${questionnaire.id}}" th:object="${replyForm}" action="#" method="post">
+                    <input type="hidden" th:field="*{questionnaireId}" th:value="*{questionnaireId}"/>
+                    <!-- Error Message -->
+                    <div th:if="${#fields.hasErrors('*')} or ${hasRequiredMissing}" class="alert alert-danger">
+                        <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Validation error</p>
+                        <p th:if="${hasRequiredMissing}">You must answer the required questions.</p>
+                    </div>
 
-                    <!--/* Single Line Text
-                        ================================================== */-->
-                    <div th:case="'SINGLE_LINE_TEXT'" class="form-group question" th:classappend="${question.required}? required">
+                    <div class="form-group question"
+                         th:each="question,iter : ${questionnaire.questions}"
+                         th:switch="${question.type.name()}"
+                         th:classappend="${question.required}? 'required'">
+                        <input type="hidden" th:field="*{items[__${iter.index}__].questionId}"
+                               th:value="*{items[__${iter.index}__].questionId}"/>
                         <div>
                             <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">1.</span>
                             <span class="question-content" th:text="${question.title}">Student Number:</span>
                         </div>
-                        <input type="text" class="form-control"/>
-                    </div>
 
-                    <!--/* Multiple Choice
-                        ================================================== */-->
-                    <div th:case="'MULTIPLE_CHOICE'" class="form-group question"
-                         th:classappend="${question.required}? required">
-                        <div>
-                            <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">2.</span>
-                            <span class="question-content" th:text="${question.title}">
-                                What programming languages are you familiar with (can read and write some code)?
-                            </span>
+                        <!--/* Single Line Text
+                            ================================================== */-->
+                        <div th:case="'SINGLE_LINE_TEXT'">
+                            <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
+                                   th:errorclass="input_text_has_error"/>
                         </div>
-                        <!--/*/ <th:block th:each="option : ${question.options}"> /*/-->
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"/>
-                                <span th:text="${option.text}">C/C++</span>
-                            </label>
-                        </div>
-                        <!--/*/ </th:block> /*/-->
-                        <!--/*-->
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"/>
-                                <span th:text="${option.text}">Java</span>
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"/>
-                                <span th:text="${option.text}">PHP</span>
-                            </label>
-                        </div>
-                        <!--*/-->
-                        <div class="checkbox" th:if="${question.hasOthersOption}">
-                            <label>
-                                <input type="checkbox"/>
-                                <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
-                                <input type="text" class="form-control"/>
-                            </label>
-                        </div>
-                    </div>
 
-                    <!--/* Single Choice
-                        ================================================== */-->
-                    <div th:case="'SINGLE_CHOICE'" class="form-group question" th:classappend="${question.required}? required">
-                        <div>
-                            <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">3.</span>
-                            <span class="question-content" th:text="${question.title}">
-                                Did you know Java before?
-                            </span>
+                        <!--/* Multiple Choice
+                            ================================================== */-->
+                        <div th:case="'MULTIPLE_CHOICE'">
+                            <div class="checkbox" th:each="option : ${question.options}">
+                                <label>
+                                    <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="${option.sequenceNumber}"/>
+                                    <span th:text="${option.text}">C/C++</span>
+                                </label>
+                            </div>
+                            <!--/*-->
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/>
+                                    <span th:text="${option.text}">Java</span>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/>
+                                    <span th:text="${option.text}">PHP</span>
+                                </label>
+                            </div>
+                            <!--*/-->
+                            <div class="checkbox" th:if="${question.hasOthersOption}">
+                                <label>
+                                    <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="-1"/>
+                                    <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
+                                    <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
+                                           th:errorclass="input_text_has_error"/>
+                                </label>
+                            </div>
                         </div>
-                        <!--/*/ <th:block th:each="option : ${question.options}"> /*/-->
-                        <div class="radio">
-                            <label>
-                                <input type="radio"/>
-                                <span th:text="${option.text}">Yes</span>
-                            </label>
-                        </div>
-                        <!--/*/ </th:block> /*/-->
-                        <!--/*-->
-                        <div class="radio">
-                            <label>
-                                <input type="radio"/>
-                                <span th:text="${option.text}">No</span>
-                            </label>
-                        </div>
-                        <!--*/-->
-                        <div class="radio" th:if="${question.hasOthersOption}">
-                            <label>
-                                <input type="radio"/>
-                                <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
-                                <input type="text" class="form-control"/>
-                            </label>
-                        </div>
-                    </div>
 
-                    <!--/* Multi-line Text
-                        ================================================== */-->
-                    <div th:case="'MULTIPLE_LINE_TEXT'" class="form-group question" th:classappend="${question.required}? required">
-                        <div>
-                            <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">4.</span>
-                            <span class="question-content" th:text="${question.title}">
-                                If you have participated in some projects or developed a software by yourself,
-                                please write down these experience in the box below.
-                            </span>
+                        <!--/* Single Choice
+                            ================================================== */-->
+                        <div th:case="'SINGLE_CHOICE'">
+                            <div class="radio" th:each="option : ${question.options}">
+                                <label>
+                                    <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="${option.sequenceNumber}"/>
+                                    <span th:text="${option.text}">Yes</span>
+                                </label>
+                            </div>
+                            <!--/*-->
+                            <div class="radio">
+                                <label>
+                                    <input type="radio"/>
+                                    <span th:text="${option.text}">No</span>
+                                </label>
+                            </div>
+                            <!--*/-->
+                            <div class="radio" th:if="${question.hasOthersOption}">
+                                <label>
+                                    <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
+                                           th:value="-1"/>
+                                    <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
+                                    <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
+                                           th:errorclass="input_text_has_error"/>
+                                </label>
+                            </div>
                         </div>
-                        <textarea class="form-control" rows="3"></textarea>
+
+                        <!--/* Multi-line Text
+                            ================================================== */-->
+                        <div th:case="'MULTIPLE_LINE_TEXT'">
+                            <textarea class="form-control" rows="3" th:field="*{items[__${iter.index}__].inputText}"
+                                      th:errorclass="input_text_has_error"></textarea>
+                        </div>
                     </div>
-                    <!--/*/ </th:block> /*/-->
                     <button type="submit" class="btn btn-primary btn-lg center-block">Submit</button>
                 </form>
-            </div>
-        </div>
-    </div>
+            </div><!-- /.question-container -->
+        </div><!-- /.inner -->
+    </div><!-- /.questionnaire-wrapper -->
 </div><!-- /.container -->
 
 <!-- Place JavaScript at the end of the document so the pages load faster -->
