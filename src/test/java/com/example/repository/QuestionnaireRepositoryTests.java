@@ -61,10 +61,7 @@ public class QuestionnaireRepositoryTests {
         long countBeforeDelete = questionnaireRepository.count();
         assertThat(countBeforeDelete).isEqualTo(1L);
 
-        // First delete all related, otherwise throw sql error.
-        optionRepository.deleteAll();
-        questionRepository.deleteAll();
-        // Last delete itself.
+        // Cascade delete.
         questionnaireRepository.delete(1L);
 
         long countAfterDelete = questionnaireRepository.count();

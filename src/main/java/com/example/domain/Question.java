@@ -31,7 +31,7 @@ public class Question {
     @Column(nullable = false)
     private boolean required = false;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
     @OrderBy("sequence_number")
     private List<Option> options;
 
@@ -43,6 +43,10 @@ public class Question {
     private String othersOptionText;
 
     protected Question() {}
+
+    protected Question(Long id) {
+        this.id = id;
+    }
 
     public Question(Questionnaire questionnaire, int sequenceNumber) {
         this.questionnaire = questionnaire;

@@ -28,6 +28,10 @@ public class Option {
 
     protected Option() {}
 
+    protected Option(Long id) {
+        this.id = id;
+    }
+
     public Option(Question question, int sequenceNumber) {
         this.question = question;
         this.sequenceNumber = sequenceNumber;

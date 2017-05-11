@@ -23,7 +23,7 @@ public class Questionnaire {
     @Size(max = 4094, message = "The length of description should be less than or equal to 4094.")
     private String description;
 
-    @OneToMany(mappedBy = "questionnaire")
+    @OneToMany(mappedBy = "questionnaire", cascade = {CascadeType.ALL})
     @OrderBy("sequence_number")
     private List<Question> questions;
 
@@ -33,6 +33,11 @@ public class Questionnaire {
     protected Questionnaire() {
         // no-args constructor required by JPA spec
         // this one is protected since it shouldn't be used directly
+    }
+
+    protected Questionnaire(Long id) {
+        // Id constructor is only used in test.
+        this.id = id;
     }
 
     public Questionnaire(String title, String description, Date createdAt) {
