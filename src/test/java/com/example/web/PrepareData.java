@@ -27,7 +27,7 @@ public class PrepareData {
             }
         };
         phoneQuestion.setType(QuestionType.SINGLE_LINE_TEXT);
-        phoneQuestion.setTitle("Phone number:");
+        phoneQuestion.setContent("Phone number:");
         phoneQuestion.setRequired(true);
 
         Question genderQuestion = new Question(questionnaire, 1) {
@@ -37,7 +37,7 @@ public class PrepareData {
             }
         };
         genderQuestion.setType(QuestionType.SINGLE_CHOICE);
-        genderQuestion.setTitle("Gender:");
+        genderQuestion.setContent("Gender:");
         List<Option> genderOptions = new ArrayList<>();
         genderOptions.add(newOption(genderQuestion, 0, "Male"));
         genderOptions.add(newOption(genderQuestion, 1, "Female"));

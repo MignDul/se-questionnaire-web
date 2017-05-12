@@ -75,7 +75,7 @@
                                th:value="*{items[__${iter.index}__].questionId}"/>
                         <div>
                             <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">1.</span>
-                            <span class="question-content" th:text="${question.title}">Student Number:</span>
+                            <span class="question-content" th:text="${question.content}">Student Number:</span>
                         </div>
 
                         <!--/* Single Line Text

@@ -24,9 +24,9 @@ public class Question {
     private QuestionType type;
 
     @Column(nullable = false, length = 4094)
-    @NotEmpty(message = "Question title is required.")
-    @Size(max = 4094, message = "The length of question's title should be less than or equal to 4094.")
-    private String title;
+    @NotEmpty(message = "Question content is required.")
+    @Size(max = 4094, message = "The length of question's content should be less than or equal to 4094.")
+    private String content;
 
     @Column(nullable = false)
     private boolean required = false;
@@ -73,12 +73,12 @@ public class Question {
         this.type = type;
     }
 
-    public String getTitle() {
-        return title;
+    public String getContent() {
+        return content;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public boolean isRequired() {
