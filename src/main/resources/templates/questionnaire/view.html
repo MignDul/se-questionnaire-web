@@ -82,7 +82,7 @@
                             ================================================== */-->
                         <div th:case="'SINGLE_LINE_TEXT'">
                             <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
-                                   th:errorclass="input_text_has_error"/>
+                                   th:errorclass="input-text-has-error"/>
                         </div>
 
                         <!--/* Multiple Choice
@@ -115,7 +115,7 @@
                                            th:value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
-                                           th:errorclass="input_text_has_error"/>
+                                           th:errorclass="input-text-has-error"/>
                                 </label>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                            th:value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
-                                           th:errorclass="input_text_has_error"/>
+                                           th:errorclass="input-text-has-error"/>
                                 </label>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                             ================================================== */-->
                         <div th:case="'MULTIPLE_LINE_TEXT'">
                             <textarea class="form-control" rows="3" th:field="*{items[__${iter.index}__].inputText}"
-                                      th:errorclass="input_text_has_error"></textarea>
+                                      th:errorclass="input-text-has-error"></textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg center-block">Submit</button>
