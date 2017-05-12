@@ -1,35 +1,80 @@
 (function () {
-    var set_question_attributes = function ($e, index) {
-        $e.attr("id", "question_" + index);
-        $e.find(".question-index").text(index + 1);
+    var set_question_attributes = function ($question, index) {
+        var id_prefix = "questions" + index + ".";
+        var name_prefix = "questions[" + index + "].";
+        $question.find(".question-sequence-number")
+            .attr("value", index)
+            .attr("id", id_prefix + "sequenceNumber")
+            .attr("name", name_prefix + "sequenceNumber");
+        $question.find(".question-index").text(index + 1);
+        $question.find(".question-content")
+            .attr("id", id_prefix + "content")
+            .attr("name", name_prefix + "content");
+        $question.find(".question-required-select")
+            .attr("id", id_prefix + "required")
+            .attr("name", name_prefix + "required");
+        $question.find(".question-type-select")
+            .attr("id", id_prefix + "type")
+            .attr("name", name_prefix + "type");
     };
-    var get_question_index = function (question_id) {
-        var parts = question_id.split("_");
-        return parseInt(parts[1]);
+    var get_question_index = function ($question) {
+        return parseInt($question.find(".question-sequence-number").attr("value"));
     };
-    var set_option_attributes = function ($e, questionIndex, optionIndex) {
-        var option_id = "question_" + questionIndex + "_option_" + optionIndex;
-        $e.attr("id", option_id);
-        $e.find(".option-index").text(optionIndex + 1);
-        $e.find("label").attr("for", option_id + "_input");
-        $e.find("input").attr("id", option_id + "_input");
+    var set_option_attributes = function ($option, question_index, option_index) {
+        var id_prefix = "questions" + question_index + ".options" + option_index + ".";
+        var name_prefix = "questions[" + question_index + "].options[" + option_index + "].";
+        $option.find(".option-sequence-number")
+            .attr("value", option_index)
+            .attr("id", id_prefix + "sequenceNumber")
+            .attr("name", name_prefix + "sequenceNumber");
+        $option.find(".option-index").text(option_index + 1);
+        $option.find(".option-label")
+            .attr("for", id_prefix + "text");
+        $option.find(".option-input")
+            .attr("id", id_prefix + "text")
+            .attr("name", name_prefix + "text");
     };
-    var get_option_indexes = function (option_id) {
-        var parts = option_id.split("_");
-        return [parseInt(parts[1]), parseInt(parts[3])];
+    var get_option_indexes = function ($option) {
+        var option_index = $option.find(".option-sequence-number").attr("value");
+        var question_index = $option.parents(".question").find(".question-sequence-number").attr("value");
+        return [parseInt(option_index), parseInt(question_index)];
     };
 
     var select_question_type_change_listener = function () {
         var $this = $(this);
         var type_index = $this.find("option:selected").index();
+        var tab_index = parseInt(type_index / 2);
         var $question = $this.parents(".question");
-        var $tab = $question.find(".tab-pane:nth-child(" + (parseInt(type_index / 2) + 1) + ")");
+        var $tab = $question.find(".tab-pane:nth-child(" + (tab_index + 1) + ")");
+
+        if (tab_index == 0 && $tab.find(".option").length == 0) {
+            // Make sure there are two empty options
+            var $option_add = $tab.find(".option-add");
+            $option_add.click();
+            $option_add.click();
+        } else {
+            var name_existed = typeof($question.find(".option-sequence-number").attr("name")) != 'undefined';
+            if (tab_index == 0 && !name_existed) {
+                // Valid request parameters
+                var question_index = get_question_index($question);
+                $question.find(".option").each(function (i, e) {
+                    set_option_attributes($(e), question_index, i);
+                });
+            } else if (tab_index = 1 && name_existed) {
+                // Invalid request parameters
+                // If text types are chosen, these parameters should not be uploaded to the server
+                $question.find(".option").each(function (i, e) {
+                    $(e).find(".option-sequence-number").removeAttr("name");
+                    $(e).find(".option-input").removeAttr("name");
+                });
+            }
+        }
         $question.find(".tab-pane").removeClass("active");
         $tab.addClass("active");
     };
     var remove_question_click_listener = function () {
         var $removed_question = $(this).parents(".question");
-        var index_start = get_question_index($removed_question.attr("id"));
+        var index_start = get_question_index($removed_question);
         $removed_question.nextAll(".question").each(function (i, e) {
             var $e = $(e);
             // Update attributes
@@ -52,7 +97,7 @@
         // Set sequence number
         var $options = $question.find(".option");
         var option_count = $options.length;
-        set_option_attributes($new_option, get_question_index($question.attr("id")), option_count);
+        set_option_attributes($new_option, get_question_index($question), option_count);
         // Bind listener
         $new_option.find(".option-remove").on("click", remove_option_click_listener);
 
@@ -65,7 +110,7 @@
     };
     var remove_option_click_listener = function () {
         var $removed_option = $(this).parents(".option");
-        var indexes = get_option_indexes($removed_option.attr("id"));
+        var indexes = get_option_indexes($removed_option);
         $removed_option.nextAll(".option").each(function (i, e) {
             var $e = $(e);
             // Update attributes
@@ -78,11 +123,21 @@
 
     var add_others_option_click_listener = function () {
         var $this = $(this);
-        var $question = $this.parents(".question");
         var $new_others_option = $("body > .option-others").clone();
         $new_others_option.removeClass("hidden");
         // Set attributes
-        set_option_attributes($new_others_option, get_question_index($question.attr("id")), -1);
+        var question_index = get_question_index($this.parents(".question"));
+        var id_prefix = "question" + question_index + ".";
+        var name_prefix = "questions[" + question_index + "].";
+        $new_others_option.find(".option-has-others")
+            .attr("value", "true")
+            .attr("id", id_prefix + "hasOthersOption")
+            .attr("name", name_prefix + "hasOthersOption");
+        $new_others_option.find(".option-label")
+            .attr("for", id_prefix + "othersOptionText");
+        $new_others_option.find(".option-input")
+            .attr("id", id_prefix + "othersOptionText")
+            .attr("name", name_prefix + "othersOptionText");
         // Bind listener
         $new_others_option.find(".option-others-remove").on("click", remove_others_option_click_listener);
 
@@ -123,6 +178,16 @@
     });
 
     $(document).ready(function () {
-        $("#btn_add_question").click();
+        var $questions = $(".question-container .question");
+        if ($questions.length == 0) {
+            $("#btn_add_question").click();
+        } else {
+            $questions.find(".question-type-select").on("change", select_question_type_change_listener);
+            $questions.find(".question-remove").on("click", remove_question_click_listener);
+            $questions.find(".option-add").on("click", add_option_click_listener);
+            $questions.find(".option-others-add").on("click", add_others_option_click_listener);
+            $questions.find(".option-remove").on("click", remove_option_click_listener);
+            $questions.find(".option-others-remove").on("click", remove_others_option_click_listener);
+        }
     });
 })();

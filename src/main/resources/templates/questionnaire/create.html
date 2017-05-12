@@ -45,18 +45,126 @@
 <div class="container create-container">
     <h2>Create A Questionnaire</h2>
 
-    <form th:action="@{/create}" action="#" method="post">
+    <form th:action="@{/create}" th:object="${questionnaire}" action="#" method="post">
 
         <div class="form-group">
-            <input type="text" class="form-control input-lg" placeholder="Title"/>
+            <input type="text" class="form-control input-lg" placeholder="Title"
+                   th:field="*{title}" th:value="*{title}"/>
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="3" placeholder="Describe your purpose, thanks to participants, and anything else you want to tell."></textarea>
+            <textarea class="form-control" rows="3" placeholder="Describe your purpose, thanks to participants, and anything else you want to tell."
+                      th:field="*{description}" th:value="*{description}">
+            </textarea>
         </div>
 
         <div class="question-container">
             <h3>Questions</h3>
             <hr/>
+
+            <!--/*/ <th:block th:each="question,iter : *{questions}"> /*/-->
+            <div class="question form-group">
+                <input type="hidden" class="question-sequence-number"
+                       th:field="*{questions[__${iter.index}__].sequenceNumber}"
+                       th:value="*{questions[__${iter.index}__].sequenceNumber}"/>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="question-index" th:text="${iter.index + 1}">0</span>.
+                            </div>
+                            <input type="text" class="question-content form-control" placeholder="Question content here..."
+                                   th:field="*{questions[__${iter.index}__].content}"
+                                   th:value="*{questions[__${iter.index}__].content}"/>
+                        </div>
+                    </div>
+                    <div class="question-attr-container col-md-2">
+                        <div class="input-group">
+                            <div class="input-group-addon">Required:</div>
+                            <select class="question-required-select form-control"
+                                    th:field="*{questions[__${iter.index}__].required}">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="question-attr-container col-md-3">
+                        <button type="button" class="question-remove close pull-right">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        <div class="input-group">
+                            <div class="input-group-addon">Type:</div>
+                            <select class="question-type-select form-control"
+                                    th:field="*{questions[__${iter.index}__].type}">
+                                <option value="SINGLE_CHOICE">Single Choice</option>
+                                <option value="MULTIPLE_CHOICE">Multiple Choice</option>
+                                <option value="SINGLE_LINE_TEXT">Single Line Text</option>
+                                <option value="MULTIPLE_LINE_TEXT">Multiple Line Text</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" th:with="questionType=*{questions[__${iter.index}__].type.name()},isChoiceType=(${questionType} == 'SINGLE_CHOICE' or ${questionType} == 'MULTIPLE_CHOICE')">
+                    <!--/* Single/Multiple Choice
+                        ================================================== */-->
+                    <div role="tabpanel" class="tab-pane option-container form-horizontal"
+                         th:classappend="${isChoiceType}? 'active'">
+                        <!--/* Option
+                            ================================================== */-->
+                        <div class="option form-group" th:each="option,oi : *{questions[__${iter.index}__].options}">
+                            <input type="hidden" class="option-sequence-number"
+                                   th:field="*{questions[__${iter.index}__].options[__${oi.index}__].sequenceNumber}"
+                                   th:value="*{questions[__${iter.index}__].options[__${oi.index}__].sequenceNumber}"/>
+                            <button type="button" class="option-remove close"><span>&times;</span></button>
+                            <label class="option-label col-md-1 control-label"
+                                   th:for="'questions' + ${iter.index} + '.options' + ${oi.index} + '.text'">
+                                Option <span class="option-index" th:text="${oi.index + 1}">0</span>:
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="option-input form-control"
+                                       placeholder="Option text here..."
+                                       th:field="*{questions[__${iter.index}__].options[__${oi.index}__].text}"
+                                       th:value="*{questions[__${iter.index}__].options[__${oi.index}__].text}"/>
+                            </div>
+                        </div>
+                        <!--/* Others option
+                            ================================================== */-->
+                        <div class="option-others form-group" th:if="*{questions[__${iter.index}__].hasOthersOption}">
+                            <input type="hidden" class="option-has-others"
+                                   th:field="*{questions[__${iter.index}__].hasOthersOption}"
+                                   th:value="*{questions[__${iter.index}__].hasOthersOption}"/>
+                            <button type="button" class="option-others-remove close"><span>&times;</span></button>
+                            <label class="option-label col-md-1 control-label"
+                                   th:for="'questions' + ${iter.index} + '.othersOptionText'">
+                                Others:
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" class="option-input form-control"
+                                       placeholder="Others option tip here..."
+                                       th:field="*{questions[__${iter.index}__].othersOptionText}"
+                                       th:value="*{questions[__${iter.index}__].othersOptionText}"/>
+                            </div>
+                        </div>
+
+                        <div class="option-actions form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <button type="button" class="option-add btn btn-info">Add Option</button>
+                                <button type="button" class="option-others-add btn btn-default"
+                                        th:disabled="*{questions[__${iter.index}__].hasOthersOption}">
+                                    Add Others Option
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--/* Single/Multiple Line Text
+                        ================================================== */-->
+                    <div role="tabpanel" class="tab-pane" th:classappend="${!isChoiceType}? 'active'"></div>
+                </div>
+            </div>
+            <hr/>
+            <!--/*/ </th:block> /*/-->
         </div><!-- /.question-container -->
 
         <div class="page-actions">
@@ -71,6 +179,7 @@
 <!-- Question Template
     ================================================== -->
 <div class="question form-group hidden">
+    <input type="hidden" class="question-sequence-number"/>
     <div class="row">
         <div class="col-md-7">
             <div class="input-group">
@@ -125,17 +234,19 @@
 <!-- Option Template
     ================================================== -->
 <div class="option form-group hidden">
+    <input type="hidden" class="option-sequence-number"/>
     <button type="button" class="option-remove close"><span>&times;</span></button>
-    <label class="col-md-1 control-label">Option <span class="option-index">0</span>:</label>
+    <label class="option-label col-md-1 control-label">Option <span class="option-index">0</span>:</label>
     <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="Option text here..."/>
+        <input type="text" class="option-input form-control" placeholder="Option text here..."/>
     </div>
 </div>
 <div class="option-others form-group hidden">
+    <input type="hidden" value="true" class="option-has-others"/>
     <button type="button" class="option-others-remove close"><span>&times;</span></button>
-    <label class="col-md-1 control-label">Others:</label>
+    <label class="option-label col-md-1 control-label">Others:</label>
     <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="Others option tip here..."/>
+        <input type="text" class="option-input form-control" placeholder="Others option tip here..."/>
     </div>
 </div><!-- /Option Template -->
 
