@@ -72,13 +72,22 @@
     ================================================== -->
 <div class="question form-group hidden">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
             <div class="input-group">
                 <div class="input-group-addon"><span class="question-index">0</span>.</div>
                 <input type="text" class="question-content form-control" placeholder="Question content here..."/>
             </div>
         </div>
-        <div class="question-type-container col-md-3">
+        <div class="question-attr-container col-md-2">
+            <div class="input-group">
+                <div class="input-group-addon">Required:</div>
+                <select class="question-required-select form-control">
+                    <option value="1" selected="selected">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="question-attr-container col-md-3">
             <button type="button" class="question-remove close pull-right">
                 <span class="glyphicon glyphicon-trash"></span>
             </button>

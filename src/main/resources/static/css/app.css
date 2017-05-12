@@ -153,7 +153,7 @@ fieldset[disabled] p.form-control {
         margin-left: 20px;
         margin-right: 20px;
     }
-    .question-type-container {
+    .question-attr-container {
         margin-top: 5px;
     }
     .option button.close, .option-others button.close {
