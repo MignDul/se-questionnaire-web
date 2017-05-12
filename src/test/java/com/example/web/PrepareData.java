@@ -25,8 +25,8 @@ public class PrepareData {
         phoneQuestion.setRequired(true);
 
         Question genderQuestion = new Question(6L);
-        phoneQuestion.setQuestionnaire(questionnaire);
-        phoneQuestion.setSequenceNumber(1);
+        genderQuestion.setQuestionnaire(questionnaire);
+        genderQuestion.setSequenceNumber(1);
         genderQuestion.setType(QuestionType.SINGLE_CHOICE);
         genderQuestion.setContent("Gender:");
         List<Option> genderOptions = new ArrayList<>();

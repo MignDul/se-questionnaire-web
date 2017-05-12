@@ -42,7 +42,7 @@ public class Question {
     @Size(max = 510, message = "The length of others option's text should be less than or equal to 510.")
     private String othersOptionText;
 
-    protected Question() {}
+    public Question() {}
 
     public Question(Long id) {
         this.id = id;

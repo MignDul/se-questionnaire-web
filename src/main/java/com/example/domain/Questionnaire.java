@@ -30,9 +30,8 @@ public class Questionnaire {
     @Column(nullable = false)
     private Date createdAt;
 
-    protected Questionnaire() {
+    public Questionnaire() {
         // no-args constructor required by JPA spec
-        // this one is protected since it shouldn't be used directly
     }
 
     public Questionnaire(Long id) {

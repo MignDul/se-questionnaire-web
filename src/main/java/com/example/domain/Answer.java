@@ -21,7 +21,7 @@ public class Answer {
     @Column(length = 4094)
     private String text;
 
-    protected Answer() {}
+    public Answer() {}
 
     public Answer(Long id) {
         this.id = id;

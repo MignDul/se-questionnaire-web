@@ -26,7 +26,7 @@ public class Option {
     @Size(max = 510, message = "The length of option's text should be less than or equal to 510.")
     private String text;
 
-    protected Option() {}
+    public Option() {}
 
     public Option(Long id) {
         this.id = id;

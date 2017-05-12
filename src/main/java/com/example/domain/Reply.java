@@ -20,7 +20,7 @@ public class Reply {
     @Column(nullable = false)
     private Date createdAt;
 
-    protected Reply() {}
+    public Reply() {}
 
     public Reply(Long id) {
         this.id = id;
