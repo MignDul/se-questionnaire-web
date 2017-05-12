@@ -35,8 +35,7 @@ public class Questionnaire {
         // this one is protected since it shouldn't be used directly
     }
 
-    protected Questionnaire(Long id) {
-        // Id constructor is only used in test.
+    public Questionnaire(Long id) {
         this.id = id;
     }
 
@@ -54,8 +53,16 @@ public class Questionnaire {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Question> getQuestions() {
@@ -68,5 +75,9 @@ public class Questionnaire {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

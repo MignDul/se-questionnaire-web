@@ -44,7 +44,7 @@ public class Question {
 
     protected Question() {}
 
-    protected Question(Long id) {
+    public Question(Long id) {
         this.id = id;
     }
 
@@ -61,8 +61,16 @@ public class Question {
         return questionnaire;
     }
 
+    public void setQuestionnaire(Questionnaire questionnaire) {
+        this.questionnaire = questionnaire;
+    }
+
     public int getSequenceNumber() {
         return sequenceNumber;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public QuestionType getType() {

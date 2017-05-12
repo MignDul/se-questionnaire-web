@@ -22,7 +22,7 @@ public class Reply {
 
     protected Reply() {}
 
-    protected Reply(Long id) {
+    public Reply(Long id) {
         this.id = id;
     }
 
@@ -39,6 +39,10 @@ public class Reply {
         return questionnaire;
     }
 
+    public void setQuestionnaire(Questionnaire questionnaire) {
+        this.questionnaire = questionnaire;
+    }
+
     public Set<Answer> getAnswers() {
         return answers;
     }
@@ -49,5 +53,9 @@ public class Reply {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

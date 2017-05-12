@@ -23,7 +23,7 @@ public class Answer {
 
     protected Answer() {}
 
-    protected Answer(Long id) {
+    public Answer(Long id) {
         this.id = id;
     }
 
@@ -40,8 +40,16 @@ public class Answer {
         return reply;
     }
 
+    public void setReply(Reply reply) {
+        this.reply = reply;
+    }
+
     public Question getQuestion() {
         return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public Integer getOptionSequenceNumber() {

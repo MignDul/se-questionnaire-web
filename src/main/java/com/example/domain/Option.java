@@ -28,7 +28,7 @@ public class Option {
 
     protected Option() {}
 
-    protected Option(Long id) {
+    public Option(Long id) {
         this.id = id;
     }
 
@@ -45,8 +45,16 @@ public class Option {
         return question;
     }
 
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
     public int getSequenceNumber() {
         return sequenceNumber;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public String getText() {

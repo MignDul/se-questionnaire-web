@@ -13,29 +13,20 @@ import java.util.List;
 public class PrepareData {
 
     public static Questionnaire generateTestQuestionnaire() {
-        Questionnaire questionnaire = new Questionnaire("A Test Questionnaire", null, new Date()) {
-            @Override
-            public Long getId() {
-                return 2L;
-            }
-        };
+        Questionnaire questionnaire = new Questionnaire(2L);
+        questionnaire.setTitle("A Test Questionnaire");
+        questionnaire.setCreatedAt(new Date());
 
-        Question phoneQuestion = new Question(questionnaire, 0) {
-            @Override
-            public Long getId() {
-                return 5L;
-            }
-        };
+        Question phoneQuestion = new Question(5L);
+        phoneQuestion.setQuestionnaire(questionnaire);
+        phoneQuestion.setSequenceNumber(0);
         phoneQuestion.setType(QuestionType.SINGLE_LINE_TEXT);
         phoneQuestion.setContent("Phone number:");
         phoneQuestion.setRequired(true);
 
-        Question genderQuestion = new Question(questionnaire, 1) {
-            @Override
-            public Long getId() {
-                return 6L;
-            }
-        };
+        Question genderQuestion = new Question(6L);
+        phoneQuestion.setQuestionnaire(questionnaire);
+        phoneQuestion.setSequenceNumber(1);
         genderQuestion.setType(QuestionType.SINGLE_CHOICE);
         genderQuestion.setContent("Gender:");
         List<Option> genderOptions = new ArrayList<>();
