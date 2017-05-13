@@ -56,10 +56,6 @@ public class QuestionnaireController {
                     && StringUtils.isEmpty(item.getInputText())) {
                 hasRequiredMissing = true;
             }
-
-            if (item.getInputText() != null && "".equals(item.getInputText().trim())) {
-                item.setInputText(null);
-            }
         }
         // If there are some required questions not filled, or validation error existed, show error message.
         if (hasRequiredMissing || result.hasErrors()) {
@@ -77,26 +73,20 @@ public class QuestionnaireController {
             Question question = questionnaire.getQuestions().get(i);
             ReplyFormItem item = replyForm.getItems().get(i);
 
-            Answer othersOptionAnswer = null;
             if (!CollectionUtils.isEmpty(item.getSelectedOptions())) {
                 List<Integer> selectedOptions = item.getSelectedOptions();
                 for (int optionSequenceNumber : selectedOptions) {
                     Answer answer = new Answer(reply, question);
                     answer.setOptionSequenceNumber(optionSequenceNumber);
-                    answers.add(answer);
                     if (optionSequenceNumber == -1) {
-                        othersOptionAnswer = answer;
+                        answer.setText(item.getInputText());
                     }
-                }
-            }
-            if (!StringUtils.isEmpty(item.getInputText())) {
-                if (othersOptionAnswer != null) {
-                    othersOptionAnswer.setText(item.getInputText());
-                } else {
-                    Answer answer = new Answer(reply, question);
-                    answer.setText(item.getInputText());
                     answers.add(answer);
                 }
+            } else if (!StringUtils.isEmpty(item.getInputText())) {
+                Answer answer = new Answer(reply, question);
+                answer.setText(item.getInputText());
+                answers.add(answer);
             }
         }
         reply.setAnswers(answers);
