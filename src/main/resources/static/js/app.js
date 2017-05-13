@@ -39,6 +39,19 @@
         var question_index = $option.parents(".question").find(".question-sequence-number").attr("value");
         return [parseInt(option_index), parseInt(question_index)];
     };
+    var set_others_option_attributes = function ($others_option, question_index) {
+        var id_prefix = "question" + question_index + ".";
+        var name_prefix = "questions[" + question_index + "].";
+        $others_option.find(".option-has-others")
+            .attr("value", "true")
+            .attr("id", id_prefix + "hasOthersOption")
+            .attr("name", name_prefix + "hasOthersOption");
+        $others_option.find(".option-label")
+            .attr("for", id_prefix + "othersOptionText");
+        $others_option.find(".option-input")
+            .attr("id", id_prefix + "othersOptionText")
+            .attr("name", name_prefix + "othersOptionText");
+    };
 
     var select_question_type_change_listener = function () {
         var $this = $(this);
@@ -53,6 +66,7 @@
             $option_add.click();
             $option_add.click();
         } else {
+            var $others_option;
             var name_existed = typeof($question.find(".option-sequence-number").attr("name")) != 'undefined';
             if (tab_index == 0 && !name_existed) {
                 // Valid request parameters
@@ -60,13 +74,23 @@
                 $question.find(".option").each(function (i, e) {
                     set_option_attributes($(e), question_index, i);
                 });
+                $others_option = $question.find(".option-others");
+                if ($others_option.length > 0) {
+                    set_others_option_attributes($others_option, question_index);
+                }
             } else if (tab_index = 1 && name_existed) {
                 // Invalid request parameters
                 // If text types are chosen, these parameters should not be uploaded to the server
                 $question.find(".option").each(function (i, e) {
-                    $(e).find(".option-sequence-number").removeAttr("name");
-                    $(e).find(".option-input").removeAttr("name");
+                    var $e = $(e);
+                    $e.find(".option-sequence-number").removeAttr("name");
+                    $e.find(".option-input").removeAttr("name");
                 });
+                $others_option = $question.find(".option-others");
+                if ($others_option.length > 0) {
+                    $others_option.find(".option-has-others").removeAttr("name");
+                    $others_option.find(".option-input").removeAttr("name");
+                }
             }
         }
         $question.find(".tab-pane").removeClass("active");
@@ -83,7 +107,12 @@
             // Update options' attributes
             $e.find(".option").each(function (oi, oe) {
                 set_option_attributes($(oe), sequence_number, oi);
-            })
+            });
+            // Update others option's attributes
+            var $others_option = $e.find(".option-others");
+            if ($others_option.length > 0) {
+                set_others_option_attributes($others_option, sequence_number);
+            }
         });
 
         $removed_question.next().remove(); // Remove <hr/> tag
@@ -126,18 +155,7 @@
         var $new_others_option = $("body > .option-others").clone();
         $new_others_option.removeClass("hidden");
         // Set attributes
-        var question_index = get_question_index($this.parents(".question"));
-        var id_prefix = "question" + question_index + ".";
-        var name_prefix = "questions[" + question_index + "].";
-        $new_others_option.find(".option-has-others")
-            .attr("value", "true")
-            .attr("id", id_prefix + "hasOthersOption")
-            .attr("name", name_prefix + "hasOthersOption");
-        $new_others_option.find(".option-label")
-            .attr("for", id_prefix + "othersOptionText");
-        $new_others_option.find(".option-input")
-            .attr("id", id_prefix + "othersOptionText")
-            .attr("name", name_prefix + "othersOptionText");
+        set_others_option_attributes($new_others_option, get_question_index($this.parents(".question")));
         // Bind listener
         $new_others_option.find(".option-others-remove").on("click", remove_others_option_click_listener);
 
@@ -154,7 +172,7 @@
         $option_others.remove();
     };
 
-    $("#btn_add_question").click(function () {
+    $("#btn_add_question").on("click", function () {
         var $new_question = $("body > .question").clone();
         $new_question.removeClass("hidden");
         // Set sequence number
