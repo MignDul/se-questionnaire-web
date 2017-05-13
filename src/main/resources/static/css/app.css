@@ -24,10 +24,22 @@
 /* index.html
 -------------------------------------------------- */
 
+.table>tbody>tr>td.col-index, .table>tbody>tr>td.col-title, .table>tbody>tr>td.col-date {
+    padding-top: 14px;
+}
+
+.table>tbody>tr>td.col-date {
+    width: 140px;
+}
+
+.table>tbody>tr>td.col-actions {
+    width: 70px;
+}
+
 /* Carousel */
 .carousel {
     height: 410px;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     background: url('../images/index_sliders_bg.jpg') no-repeat center;
 }
 .carousel-caption {
@@ -143,7 +155,7 @@ fieldset[disabled] p.form-control {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .questionnaire-wrapper {
         width: auto;
         min-width: inherit;
@@ -159,5 +171,9 @@ fieldset[disabled] p.form-control {
     .option button.close, .option-others button.close {
         margin-right: 15px;
         margin-top: 0;
+    }
+    .table>tbody>tr>td.col-date {
+        width: 90px;
+        text-align: right;
     }
 }

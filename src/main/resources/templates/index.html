@@ -43,7 +43,47 @@
 
 <!-- Container
     ================================================== -->
-<div class="container">
+<div class="container" th:if="${!#lists.isEmpty(questionnaires)}">
+    <h1>All Questionnaires</h1>
+    <hr/>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-index">#</th>
+                <th class="col-title">Title</th>
+                <th class="col-date">Date&nbsp;<span class="caret"></span></th>
+                <th class="col-actions"></th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="questionnaire,iter : ${questionnaires}">
+                <td class="col-index" scope="row" th:text="${iter.index + 1}">1</td>
+                <td class="col-title" th:text="${questionnaire.title}">A Text Questionnaire</td>
+                <td class="col-date" th:text="${#dates.format(questionnaire.createdAt, 'yyyy-MM-dd HH:mm')}">
+                    2017-05-01 08:00</td>
+                <td class="col-actions">
+                    <a th:href="@{'/questionnaires/' + ${questionnaire.id}}" href="questionnaire/view.html"
+                       class="btn btn-primary btn-sm" role="button">Reply</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-index" scope="row">1</td>
+                <td class="col-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </td>
+                <td class="col-date">2017-05-01 07:00</td>
+                <td class="col-actions">
+                    <a href="questionnaire/view.html" class="btn btn-primary btn-sm" role="button">Reply</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div><!-- /.container -->
 
 <!--/*/ <th:block th:include="fragments :: assets"></th:block> /*/-->
