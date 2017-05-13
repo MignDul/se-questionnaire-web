@@ -22,7 +22,7 @@ public class Option {
     private int sequenceNumber;
 
     @Column(nullable = false, length = 510)
-    @NotEmpty(message = "Option's text is required.")
+    @NotEmpty(message = "Option text is required.")
     @Size(max = 510, message = "The length of option's text should be less than or equal to 510.")
     private String text;
 

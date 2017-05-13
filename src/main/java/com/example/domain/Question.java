@@ -21,7 +21,7 @@ public class Question {
     private int sequenceNumber;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL) // type's values are "0, 1, 2" in the database
+    @Enumerated(EnumType.ORDINAL) // type's values are "0, 1, 2, 3" in the database
     private QuestionType type;
 
     @Column(nullable = false, length = 4094)
