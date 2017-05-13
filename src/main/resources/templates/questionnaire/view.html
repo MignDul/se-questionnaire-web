@@ -60,7 +60,6 @@
             </div>
             <div class="question-container">
                 <form th:action="@{'/questionnaires/' + ${questionnaire.id}}" th:object="${replyForm}" action="#" method="post">
-                    <input type="hidden" th:field="*{questionnaireId}" th:value="*{questionnaireId}"/>
                     <!-- Error Message -->
                     <div th:if="${#fields.hasErrors('*')} or ${hasRequiredMissing}" class="alert alert-danger">
                         <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Validation error</p>
@@ -71,8 +70,6 @@
                          th:each="question,iter : ${questionnaire.questions}"
                          th:switch="${question.type.name()}"
                          th:classappend="${question.required}? 'required'">
-                        <input type="hidden" th:field="*{items[__${iter.index}__].questionId}"
-                               th:value="*{items[__${iter.index}__].questionId}"/>
                         <div>
                             <span class="question-index" th:text="${question.sequenceNumber + 1} + '.'">1.</span>
                             <span class="question-content" th:text="${question.content}">Student Number:</span>
@@ -99,20 +96,20 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"/>
-                                    <span th:text="${option.text}">Java</span>
+                                    <span>Java</span>
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"/>
-                                    <span th:text="${option.text}">PHP</span>
+                                    <span>PHP</span>
                                 </label>
                             </div>
                             <!--*/-->
                             <div class="checkbox" th:if="${question.hasOthersOption}">
                                 <label>
                                     <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
-                                           th:value="-1"/>
+                                           value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
                                            th:errorclass="input-text-has-error"/>
@@ -134,14 +131,14 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio"/>
-                                    <span th:text="${option.text}">No</span>
+                                    <span>No</span>
                                 </label>
                             </div>
                             <!--*/-->
                             <div class="radio" th:if="${question.hasOthersOption}">
                                 <label>
                                     <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
-                                           th:value="-1"/>
+                                           value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <input type="text" class="form-control" th:field="*{items[__${iter.index}__].inputText}"
                                            th:errorclass="input-text-has-error"/>

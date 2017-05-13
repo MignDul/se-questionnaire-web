@@ -67,8 +67,7 @@ public class QuestionnaireControllerTests {
                 .param("items[1].selectedOptions", "0")
         )
                 .andExpect(status().isFound())
-                .andExpect(redirectedUrl("/questionnaires/finished"))
-                .andExpect(flash().attribute("questionnaireId", 2L));
+                .andExpect(redirectedUrl("/questionnaires/2/finished"));
     }
 
     @Test

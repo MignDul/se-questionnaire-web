@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -29,37 +28,21 @@ public class QuestionnaireController {
     private ReplyRepository replyRepository;
 
     @GetMapping("/{id}")
-    public ModelAndView getQuestionnaire(@PathVariable("id") Long id) {
-        Questionnaire questionnaire = null;
-        if (id != null) {
-            questionnaire = questionnaireRepository.findOne(id);
-        }
+    public ModelAndView getQuestionnaire(@PathVariable("id") Long id,
+                                         @ModelAttribute("replyForm") ReplyForm replyForm) {
+        Questionnaire questionnaire = questionnaireRepository.findOne(id);
         if (questionnaire == null) {
             throw new QuestionnaireNotFoundException(id);
         }
-
-        ModelAndView modelAndView = new ModelAndView("questionnaire/view", "questionnaire", questionnaire);
-        List<ReplyFormItem> items = new ArrayList<>();
-        for (Question question : questionnaire.getQuestions()) {
-            items.add(new ReplyFormItem(question.getId()));
-        }
-        ReplyForm replyForm = new ReplyForm(questionnaire.getId(), items);
-        modelAndView.addObject("replyForm", replyForm);
-        return modelAndView;
+        return new ModelAndView("questionnaire/view", "questionnaire", questionnaire);
     }
 
     @PostMapping("/{id}")
     public ModelAndView createReply(@PathVariable("id") Long id,
                                     @Valid @ModelAttribute("replyForm") ReplyForm replyForm,
-                                    BindingResult result,
-                                    RedirectAttributes redirect) {
-        Questionnaire questionnaire = null;
-        if (replyForm.getQuestionnaireId() != null) {
-            questionnaire = questionnaireRepository.findOne(replyForm.getQuestionnaireId());
-        }
-        if (questionnaire == null
-                || CollectionUtils.isEmpty(replyForm.getItems())
-                || questionnaire.getQuestions().size() != replyForm.getItems().size()) {
+                                    BindingResult result) {
+        Questionnaire questionnaire = questionnaireRepository.findOne(id);
+        if (questionnaire == null) {
             throw new QuestionnaireNotFoundException(id);
         }
 
@@ -67,11 +50,6 @@ public class QuestionnaireController {
         for (int i = 0; i < questionnaire.getQuestions().size(); i++) {
             Question question = questionnaire.getQuestions().get(i);
             ReplyFormItem item = replyForm.getItems().get(i);
-            // Check id corresponds.
-            if (item.getQuestionId() == null
-                    || !question.getId().equals(item.getQuestionId())) {
-                throw new QuestionnaireNotFoundException(id);
-            }
             // Check if required questions are filled.
             if (question.isRequired()
                     && CollectionUtils.isEmpty(item.getSelectedOptions())
@@ -125,13 +103,12 @@ public class QuestionnaireController {
         // Save reply and related answers.
         replyRepository.save(reply);
 
-        redirect.addFlashAttribute("questionnaireId", id);
-        return new ModelAndView("redirect:/questionnaires/finished");
+        return new ModelAndView("redirect:/questionnaires/{id}/finished", "id", id);
     }
 
-    @GetMapping("/finished")
-    public String getReplySubmitSuccess() {
-        return "reply/success";
+    @GetMapping("/{id}/finished")
+    public ModelAndView getReplySubmitSuccess(@PathVariable("id") Long id) {
+        return new ModelAndView("reply/success", "questionnaireId", id);
     }
 
     @GetMapping("/{id}/analysis")

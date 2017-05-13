@@ -92,20 +92,20 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"/>
-                                    <span th:text="${option.text}">Java</span>
+                                    <span>Java</span>
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"/>
-                                    <span th:text="${option.text}">PHP</span>
+                                    <span>PHP</span>
                                 </label>
                             </div>
                             <!--*/-->
                             <div class="checkbox" th:if="${question.hasOthersOption}">
                                 <label>
                                     <input type="checkbox" th:field="*{items[__${iter.index}__].selectedOptions}"
-                                           th:value="-1"/>
+                                           value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <p class="form-control"
                                        th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">
@@ -129,14 +129,14 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio"/>
-                                    <span th:text="${option.text}">No</span>
+                                    <span>No</span>
                                 </label>
                             </div>
                             <!--*/-->
                             <div class="radio" th:if="${question.hasOthersOption}">
                                 <label>
                                     <input type="radio" th:field="*{items[__${iter.index}__].selectedOptions}"
-                                           th:value="-1"/>
+                                           value="-1"/>
                                     <span th:text="${question.othersOptionText}">Others (Please specify in the box below.)</span>
                                     <p class="form-control"
                                        th:text="*{items[__${iter.index}__].inputText}? *{items[__${iter.index}__].inputText} : '&nbsp;'">

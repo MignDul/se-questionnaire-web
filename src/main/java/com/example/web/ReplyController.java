@@ -20,10 +20,7 @@ public class ReplyController {
 
     @GetMapping("/{id}")
     public ModelAndView getReply(@PathVariable("id") Long id) {
-        Reply reply = null;
-        if (id != null) {
-            reply = replyRepository.findOne(id);
-        }
+        Reply reply = replyRepository.findOne(id);
         if (reply == null) {
             throw new ReplyNotFoundException(id);
         }
@@ -33,7 +30,7 @@ public class ReplyController {
 
         List<ReplyFormItem> items = new ArrayList<>();
         for (Question question : questionnaire.getQuestions()) {
-            items.add(new ReplyFormItem(question.getId()));
+            items.add(new ReplyFormItem());
         }
 
         // Transform domain object (Reply) to request attribute object (ReplyForm).
@@ -52,7 +49,7 @@ public class ReplyController {
                 item.setInputText(answer.getText());
             }
         }
-        ReplyForm replyForm = new ReplyForm(questionnaire.getId(), items);
+        ReplyForm replyForm = new ReplyForm(items);
         modelAndView.addObject("replyForm", replyForm);
         return modelAndView;
     }

@@ -8,24 +8,13 @@ import java.util.List;
  */
 public class ReplyForm {
 
-    private Long questionnaireId;
-
     @Valid
     private List<ReplyFormItem> items;
 
     public ReplyForm() {}
 
-    public ReplyForm(Long questionnaireId, List<ReplyFormItem> items) {
-        this.questionnaireId = questionnaireId;
+    public ReplyForm(List<ReplyFormItem> items) {
         this.items = items;
-    }
-
-    public Long getQuestionnaireId() {
-        return questionnaireId;
-    }
-
-    public void setQuestionnaireId(Long questionnaireId) {
-        this.questionnaireId = questionnaireId;
     }
 
     public List<ReplyFormItem> getItems() {

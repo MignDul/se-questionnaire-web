@@ -8,26 +8,12 @@ import java.util.List;
  */
 public class ReplyFormItem {
 
-    private Long questionId;
-
     private List<Integer> selectedOptions;
 
     @Size(max = 4094, message = "The length of input text should be less than or equal to 4094.")
     private String inputText;
 
     public ReplyFormItem() {}
-
-    public ReplyFormItem(Long questionId) {
-        this.questionId = questionId;
-    }
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
 
     public List<Integer> getSelectedOptions() {
         return selectedOptions;
