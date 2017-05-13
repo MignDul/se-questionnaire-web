@@ -29,7 +29,7 @@ public class ReplyController {
         ModelAndView modelAndView = new ModelAndView("reply/view", "questionnaire", questionnaire);
 
         List<ReplyFormItem> items = new ArrayList<>();
-        for (Question question : questionnaire.getQuestions()) {
+        for (int i = 0; i < questionnaire.getQuestions().size(); i++) {
             items.add(new ReplyFormItem());
         }
 
