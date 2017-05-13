@@ -51,7 +51,7 @@ public class CreateQuestionnaireController {
             }
         }
         questionnaire.setCreatedAt(new Date());
-        questionnaireRepository.save(questionnaire);
+        questionnaire = questionnaireRepository.save(questionnaire);
 
         redirect.addFlashAttribute("questionnaireId", questionnaire.getId());
         return new ModelAndView("redirect:/create/finished");

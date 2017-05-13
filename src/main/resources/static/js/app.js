@@ -78,7 +78,7 @@
                 if ($others_option.length > 0) {
                     set_others_option_attributes($others_option, question_index);
                 }
-            } else if (tab_index = 1 && name_existed) {
+            } else if (tab_index == 1 && name_existed) {
                 // Invalid request parameters
                 // If text types are chosen, these parameters should not be uploaded to the server
                 $question.find(".option").each(function (i, e) {
