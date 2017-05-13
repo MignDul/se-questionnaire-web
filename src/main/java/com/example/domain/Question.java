@@ -3,6 +3,7 @@ package com.example.domain;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
     @OrderBy("sequence_number")
+    @Valid
     private List<Option> options;
 
     @Column(nullable = false)

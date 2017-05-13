@@ -53,6 +53,12 @@ public class CreateQuestionnaireController {
         questionnaire.setCreatedAt(new Date());
         questionnaireRepository.save(questionnaire);
 
-        return new ModelAndView("redirect:/questionnaires/finished");
+        redirect.addFlashAttribute("questionnaireId", questionnaire.getId());
+        return new ModelAndView("redirect:/create/finished");
+    }
+
+    @GetMapping("/finished")
+    public String getQuestionnaireCreateSuccess() {
+        return "questionnaire/success";
     }
 }

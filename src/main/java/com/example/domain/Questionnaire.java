@@ -3,6 +3,7 @@ package com.example.domain;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,8 @@ public class Questionnaire {
 
     @OneToMany(mappedBy = "questionnaire", cascade = {CascadeType.ALL})
     @OrderBy("sequence_number")
+    @Valid
+    @NotEmpty(message = "At least one question is needed.")
     private List<Question> questions;
 
     @Column(nullable = false)

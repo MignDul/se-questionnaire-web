@@ -47,13 +47,18 @@
 
     <form th:action="@{/create}" th:object="${questionnaire}" action="#" method="post">
 
+        <!-- Error Message -->
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Validation error</p>
+        </div>
+
         <div class="form-group">
             <input type="text" class="form-control input-lg" placeholder="Title"
-                   th:field="*{title}" th:value="*{title}"/>
+                   th:field="*{title}" th:errorclass="input-text-has-error"/>
         </div>
         <div class="form-group">
             <textarea class="form-control" rows="3" placeholder="Describe your purpose, thanks to participants, and anything else you want to tell."
-                      th:field="*{description}" th:value="*{description}">
+                      th:field="*{description}" th:errorclass="input-text-has-error">
             </textarea>
         </div>
 
@@ -64,8 +69,7 @@
             <!--/*/ <th:block th:each="question,iter : *{questions}"> /*/-->
             <div class="question form-group">
                 <input type="hidden" class="question-sequence-number"
-                       th:field="*{questions[__${iter.index}__].sequenceNumber}"
-                       th:value="*{questions[__${iter.index}__].sequenceNumber}"/>
+                       th:field="*{questions[__${iter.index}__].sequenceNumber}"/>
                 <div class="row">
                     <div class="col-md-7">
                         <div class="input-group">
@@ -73,8 +77,7 @@
                                 <span class="question-index" th:text="${iter.index + 1}">0</span>.
                             </div>
                             <input type="text" class="question-content form-control" placeholder="Question content here..."
-                                   th:field="*{questions[__${iter.index}__].content}"
-                                   th:value="*{questions[__${iter.index}__].content}"/>
+                                   th:field="*{questions[__${iter.index}__].content}" th:errorclass="input-text-has-error"/>
                         </div>
                     </div>
                     <div class="question-attr-container col-md-2">
@@ -113,8 +116,7 @@
                             ================================================== */-->
                         <div class="option form-group" th:each="option,oi : *{questions[__${iter.index}__].options}">
                             <input type="hidden" class="option-sequence-number"
-                                   th:field="*{questions[__${iter.index}__].options[__${oi.index}__].sequenceNumber}"
-                                   th:value="*{questions[__${iter.index}__].options[__${oi.index}__].sequenceNumber}"/>
+                                   th:field="*{questions[__${iter.index}__].options[__${oi.index}__].sequenceNumber}"/>
                             <button type="button" class="option-remove close"><span>&times;</span></button>
                             <label class="option-label col-md-1 control-label"
                                    th:for="'questions' + ${iter.index} + '.options' + ${oi.index} + '.text'">
@@ -122,17 +124,15 @@
                             </label>
                             <div class="col-md-5">
                                 <input type="text" class="option-input form-control"
-                                       placeholder="Option text here..."
-                                       th:field="*{questions[__${iter.index}__].options[__${oi.index}__].text}"
-                                       th:value="*{questions[__${iter.index}__].options[__${oi.index}__].text}"/>
+                                       placeholder="Option text here..." th:errorclass="input-text-has-error"
+                                       th:field="*{questions[__${iter.index}__].options[__${oi.index}__].text}"/>
                             </div>
                         </div>
                         <!--/* Others option
                             ================================================== */-->
                         <div class="option-others form-group" th:if="*{questions[__${iter.index}__].hasOthersOption}">
                             <input type="hidden" class="option-has-others"
-                                   th:field="*{questions[__${iter.index}__].hasOthersOption}"
-                                   th:value="*{questions[__${iter.index}__].hasOthersOption}"/>
+                                   th:field="*{questions[__${iter.index}__].hasOthersOption}"/>
                             <button type="button" class="option-others-remove close"><span>&times;</span></button>
                             <label class="option-label col-md-1 control-label"
                                    th:for="'questions' + ${iter.index} + '.othersOptionText'">
@@ -140,9 +140,8 @@
                             </label>
                             <div class="col-md-5">
                                 <input type="text" class="option-input form-control"
-                                       placeholder="Others option tip here..."
-                                       th:field="*{questions[__${iter.index}__].othersOptionText}"
-                                       th:value="*{questions[__${iter.index}__].othersOptionText}"/>
+                                       placeholder="Others option tip here..." th:errorclass="input-text-has-error"
+                                       th:field="*{questions[__${iter.index}__].othersOptionText}"/>
                             </div>
                         </div>
 
