@@ -33,7 +33,7 @@
 }
 
 .table>tbody>tr>td.col-actions {
-    width: 70px;
+    width: 142px;
 }
 
 /* Carousel */
@@ -175,5 +175,14 @@ fieldset[disabled] p.form-control {
     .table>tbody>tr>td.col-date {
         width: 90px;
         text-align: right;
+    }
+    .table>tbody>tr>td.col-actions {
+        width: 82px;
+    }
+    .col-actions a {
+        margin-top: 4px;
+    }
+    .col-actions a:first-child {
+        margin-top: 0;
     }
 }

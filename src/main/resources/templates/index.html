@@ -65,6 +65,8 @@
                 <td class="col-actions">
                     <a th:href="@{'/questionnaires/' + ${questionnaire.id}}" href="questionnaire/view.html"
                        class="btn btn-primary btn-sm" role="button">Reply</a>
+                    <a th:href="@{'/questionnaires/' + ${questionnaire.id}} + '/analysis'" href="reply/analysis.html"
+                       class="btn btn-success btn-sm" role="button">Analyse</a>
                 </td>
             </tr>
             <tr>
@@ -79,6 +81,7 @@
                 <td class="col-date">2017-05-01 07:00</td>
                 <td class="col-actions">
                     <a href="questionnaire/view.html" class="btn btn-primary btn-sm" role="button">Reply</a>
+                    <a href="reply/analysis.html" class="btn btn-success btn-sm" role="button">Analyse</a>
                 </td>
             </tr>
             </tbody>
