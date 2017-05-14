@@ -24,7 +24,7 @@
 /* index.html
 -------------------------------------------------- */
 
-.table>tbody>tr>td.col-index, .table>tbody>tr>td.col-common, .table>tbody>tr>td.col-date {
+.table>tbody>tr>td.col {
     padding-top: 14px;
 }
 
