@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="head (title)">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -25,9 +25,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" th:href="@{/}" href="index.html">Questionnaire</a>
+
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -36,6 +36,20 @@
                 <li th:class="${page == 'mine'}? 'active'"><a href="#mine">Mine</a></li>
                 <li th:class="${page == 'about'}? 'active'"><a th:href="@{/about}" href="about.html">About</a></li>
             </ul>
+            <!--/*/ <th:block sec:authorize="isAuthenticated()"> /*/-->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form th:action="@{/logout}" action="#" method="post">
+                        <button type="submit" class="nav-logout btn btn-link">Logout</button>
+                    </form>
+                </li>
+            </ul>
+            <div class="nav-user-info navbar-right">
+                <img class="nav-avatar" th:src="@{/images/avatar.png}" src="../static/images/avatar.png"/>
+                <span class="nav-username" sec:authentication="name">username</span>
+                <span class="nav-divider">|</span>
+            </div>
+            <!--/*/ </th:block> /*/-->
         </div><!--/.nav-collapse -->
     </div>
 </nav>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head ('Login')">
+    <title>Login</title>
+    <link type="text/css" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+    <link type="text/css" href="../../static/css/app.css" rel="stylesheet"/>
+</head>
+<body class="page">
+<!-- Navigation bar
+    ================================================== -->
+<nav th:replace="fragments :: nav ('')"></nav>
+
+<div class="container">
+    <form class="form-login" th:action="@{/login}" action="#" method="post">
+        <h2 class="form-login-heading">Please login</h2>
+
+        <p th:if="${param.logout}" class="alert alert-info">You have been logged out.</p>
+        <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again.</p>
+
+        <input type="text" class="form-control" placeholder="Username" name="username" autofocus="autofocus"/>
+        <input type="password" class="form-control" placeholder="Password" name="password"/>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"/> Remember me
+            </label>
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+    </form>
+</div>
+
+<!--/*/ <th:block th:include="fragments :: assets"></th:block> /*/-->
+</body>
+</html>
