@@ -121,8 +121,7 @@
 
     var add_option_click_listener = function () {
         var $question = $(this).parents(".question");
-        var $new_option = $("body > .option").clone();
-        $new_option.removeClass("hidden");
+        var $new_option = $(".template-container > .option").clone();
         // Set sequence number
         var $options = $question.find(".option");
         var option_count = $options.length;
@@ -152,8 +151,7 @@
 
     var add_others_option_click_listener = function () {
         var $this = $(this);
-        var $new_others_option = $("body > .option-others").clone();
-        $new_others_option.removeClass("hidden");
+        var $new_others_option = $(".template-container > .option-others").clone();
         // Set attributes
         set_others_option_attributes($new_others_option, get_question_index($this.parents(".question")));
         // Bind listener
@@ -173,8 +171,7 @@
     };
 
     $("#btn_add_question").on("click", function () {
-        var $new_question = $("body > .question").clone();
-        $new_question.removeClass("hidden");
+        var $new_question = $(".template-container > .question").clone();
         // Set sequence number
         var question_count = $(".question-container .question").length;
         set_question_attributes($new_question, question_count);

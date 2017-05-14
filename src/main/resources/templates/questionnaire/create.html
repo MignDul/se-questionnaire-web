@@ -144,79 +144,81 @@
     </form>
 </div><!-- /.container -->
 
-<!-- Question Template
-    ================================================== -->
-<div class="question form-group hidden">
-    <input type="hidden" class="question-sequence-number"/>
-    <div class="row">
-        <div class="col-md-7">
-            <div class="input-group">
-                <div class="input-group-addon"><span class="question-index">0</span>.</div>
-                <input type="text" class="question-content form-control" placeholder="Question content here..."/>
+<div class="template-container hidden">
+    <!-- Question Template
+        ================================================== -->
+    <div class="question form-group">
+        <input type="hidden" class="question-sequence-number"/>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="question-index">0</span>.</div>
+                    <input type="text" class="question-content form-control" placeholder="Question content here..."/>
+                </div>
             </div>
-        </div>
-        <div class="question-attr-container col-md-2">
-            <div class="input-group">
-                <div class="input-group-addon">Required:</div>
-                <select class="question-required-select form-control">
-                    <option value="1" selected="selected">Yes</option>
-                    <option value="0">No</option>
-                </select>
+            <div class="question-attr-container col-md-2">
+                <div class="input-group">
+                    <div class="input-group-addon">Required:</div>
+                    <select class="question-required-select form-control">
+                        <option value="1" selected="selected">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="question-attr-container col-md-3">
-            <button type="button" class="question-remove close pull-right">
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-            <div class="input-group">
-                <div class="input-group-addon">Type:</div>
-                <select class="question-type-select form-control">
-                    <option value="SINGLE_CHOICE" selected="selected">Single Choice</option>
-                    <option value="MULTIPLE_CHOICE">Multiple Choice</option>
-                    <option value="SINGLE_LINE_TEXT">Single Line Text</option>
-                    <option value="MULTIPLE_LINE_TEXT">Multiple Line Text</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="tab-content">
-        <!--/* Single/Multiple Choice
-            ================================================== */-->
-        <div role="tabpanel" class="tab-pane option-container form-horizontal active">
-            <div class="option-actions form-group">
-                <div class="col-md-1"></div>
-                <div class="col-md-5">
-                    <button type="button" class="option-add btn btn-info">Add Option</button>
-                    <button type="button" class="option-others-add btn btn-default">Add Others Option</button>
+            <div class="question-attr-container col-md-3">
+                <button type="button" class="question-remove close pull-right">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <div class="input-group">
+                    <div class="input-group-addon">Type:</div>
+                    <select class="question-type-select form-control">
+                        <option value="SINGLE_CHOICE" selected="selected">Single Choice</option>
+                        <option value="MULTIPLE_CHOICE">Multiple Choice</option>
+                        <option value="SINGLE_LINE_TEXT">Single Line Text</option>
+                        <option value="MULTIPLE_LINE_TEXT">Multiple Line Text</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!--/* Single/Multiple Line Text
-            ================================================== */-->
-        <div role="tabpanel" class="tab-pane"></div>
-    </div>
-</div><!-- /Question Template -->
+        <div class="tab-content">
+            <!--/* Single/Multiple Choice
+                ================================================== */-->
+            <div role="tabpanel" class="tab-pane option-container form-horizontal active">
+                <div class="option-actions form-group">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <button type="button" class="option-add btn btn-info">Add Option</button>
+                        <button type="button" class="option-others-add btn btn-default">Add Others Option</button>
+                    </div>
+                </div>
+            </div>
 
-<!-- Option Template
-    ================================================== -->
-<div class="option form-group hidden">
-    <input type="hidden" class="option-sequence-number"/>
-    <button type="button" class="option-remove close"><span>&times;</span></button>
-    <label class="option-label col-md-1 control-label">Option <span class="option-index">0</span>:</label>
-    <div class="col-md-5">
-        <input type="text" class="option-input form-control" placeholder="Option text here..."/>
+            <!--/* Single/Multiple Line Text
+                ================================================== */-->
+            <div role="tabpanel" class="tab-pane"></div>
+        </div>
     </div>
-</div>
-<div class="option-others form-group hidden">
-    <input type="hidden" value="true" class="option-has-others"/>
-    <button type="button" class="option-others-remove close"><span>&times;</span></button>
-    <label class="option-label col-md-1 control-label">Others:</label>
-    <div class="col-md-5">
-        <input type="text" class="option-input form-control" placeholder="Others option tip here..."/>
+
+    <!-- Option Template
+        ================================================== -->
+    <div class="option form-group">
+        <input type="hidden" class="option-sequence-number"/>
+        <button type="button" class="option-remove close"><span>&times;</span></button>
+        <label class="option-label col-md-1 control-label">Option <span class="option-index">0</span>:</label>
+        <div class="col-md-5">
+            <input type="text" class="option-input form-control" placeholder="Option text here..."/>
+        </div>
     </div>
-</div><!-- /Option Template -->
+    <div class="option-others form-group">
+        <input type="hidden" value="true" class="option-has-others"/>
+        <button type="button" class="option-others-remove close"><span>&times;</span></button>
+        <label class="option-label col-md-1 control-label">Others:</label>
+        <div class="col-md-5">
+            <input type="text" class="option-input form-control" placeholder="Others option tip here..."/>
+        </div>
+    </div>
+</div><!-- /.template-container-->
 
 <!--/*/ <th:block th:include="fragments :: assets"></th:block> /*/-->
 <!--/*/ <th:block th:remove="all">\ /*/-->
