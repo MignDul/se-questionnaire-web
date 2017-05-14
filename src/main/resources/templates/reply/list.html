@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head ('Replies')">
+    <title>Replies</title>
+    <link type="text/css" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+    <link type="text/css" href="../../static/css/app.css" rel="stylesheet"/>
+</head>
+<body class="page">
+<!-- Navigation bar
+    ================================================== -->
+<nav th:replace="fragments :: nav ('')"></nav>
+
+<!-- Container
+    ================================================== -->
+<div class="container" th:if="${#lists.isEmpty(replies)}">
+    <div class="container-wrapper">
+        <img th:src="@{/images/empty.png}" src="../../static/images/empty.png"/>
+        <p class="title lead">All replies of your questionnaire will appear here. But now there is nothing.</p>
+    </div>
+</div>
+<div class="container" th:if="${!#lists.isEmpty(replies)}">
+    <h1>All Relies (<span th:text="${#lists.size(replies)}">2</span>)</h1>
+    <hr/>
+    <div>
+        <table class="table table-striped table-replies">
+            <thead>
+            <tr>
+                <th class="col-index">#</th>
+                <th class="col-common">Date&nbsp;<span class="caret"></span></th>
+                <th class="col-actions"></th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="reply,iter : ${replies}">
+                <td class="col-index" scope="row" th:text="${iter.index + 1}">1</td>
+                <td class="col-common" th:text="${#dates.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}">
+                    2017-05-01 08:00</td>
+                <td class="col-actions">
+                    <a th:href="@{'/replies/' + ${reply.id}}" href="view.html"
+                       class="btn btn-primary btn-sm" role="button">View Detail</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-index" scope="row">2</td>
+                <td class="col-common">2017-05-01 07:00</td>
+                <td class="col-actions">
+                    <a href="view.html" class="btn btn-primary btn-sm" role="button">View Detail</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div><!-- /.container -->
+
+<!--/*/ <th:block th:include="fragments :: assets"></th:block> /*/-->
+</body>
+</html>

@@ -41,13 +41,13 @@ public class QuestionnaireRepositoryTests {
     public void testDataExisted() throws Exception {
         List<Questionnaire> data = new ArrayList<>();
         questionnaireRepository.findAll().forEach(data::add); // transfer iterable to list
-        assertThat(data.size()).isEqualTo(1);  // only one questionnaire existed in 'import.sql'
+        assertThat(data).hasSize(1);  // only one questionnaire existed in 'import.sql'
         Questionnaire questionnaire = data.get(0);
         assertThat(questionnaire.getTitle()).isEqualTo("A Questionnaire about Software Development Experience");
 
         // check questions
         List<Question> questions = questionnaire.getQuestions();
-        assertThat(questions.size()).isEqualTo(4);
+        assertThat(questions).hasSize(4);
         Question multipleChoiceQuestion = questions.get(1);
         assertThat(multipleChoiceQuestion.getType()).isEqualTo(QuestionType.MULTIPLE_CHOICE);
         assertThat(multipleChoiceQuestion.isRequired()).isTrue();
@@ -55,7 +55,7 @@ public class QuestionnaireRepositoryTests {
 
         // check options
         List<Option> options = multipleChoiceQuestion.getOptions();
-        assertThat(options.size()).isEqualTo(3);
+        assertThat(options).hasSize(3);
         assertThat(options.get(0).getText()).isEqualTo("C/C++");
     }
 

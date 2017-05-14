@@ -7,6 +7,7 @@ import com.example.domain.Reply;
 import com.example.repository.QuestionnaireRepository;
 import com.example.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/questionnaires")
@@ -103,6 +107,21 @@ public class QuestionnaireController {
 
     @GetMapping("/{id}/analysis")
     public ModelAndView getAnalysis(@PathVariable("id") Long id) {
+        Questionnaire questionnaire = questionnaireRepository.findOne(id);
+        if (questionnaire == null) {
+            throw new QuestionnaireNotFoundException(id);
+        }
         return new ModelAndView("reply/analysis");
+    }
+
+    @GetMapping("/{id}/replies")
+    public ModelAndView getAllReplies(@PathVariable("id") Long id) {
+        Questionnaire questionnaire = questionnaireRepository.findOne(id);
+        if (questionnaire == null) {
+            throw new QuestionnaireNotFoundException(id);
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "createdAt");
+        List<Reply> replies = replyRepository.findAllByQuestionnaire(questionnaire, sort);
+        return new ModelAndView("reply/list", "replies", replies);
     }
 }
