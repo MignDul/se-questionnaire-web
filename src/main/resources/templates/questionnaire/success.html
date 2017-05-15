@@ -19,7 +19,7 @@
             <p>Your questionnaire was created successfully.<br/>You can share the url with others.</p>
         </div>
         <h1 class="title">
-            <a  href="view.html"
+            <a  href="view.html" class="hyphenate"
                 th:href="@{'/questionnaires/' + ${questionnaireId}}"
                 th:text="${#httpServletRequest.scheme} + '://' + ${#httpServletRequest.serverName} + (${#httpServletRequest.serverPort == 80}? '' : ':' + ${#httpServletRequest.serverPort}) + '/questionnaires/' + ${questionnaireId}">
                 http://localhost:8080/questionnaires/{id}

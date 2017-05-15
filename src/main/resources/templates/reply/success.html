@@ -5,7 +5,7 @@
     <link type="text/css" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
     <link type="text/css" href="../../static/css/app.css" rel="stylesheet"/>
 </head>
-<body class="page">
+<body class="page page-questionnaire-success">
 <!-- Navigation bar
     ================================================== -->
 <nav th:replace="fragments :: nav ('')"></nav>
@@ -19,14 +19,18 @@
         <p class="lead">
             Your reply was submitted successfully.
         </p>
-        <div class="page-actions">
-            <a th:href="@{/}" href="../index.html" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-home"></span> Take Me Home
-            </a>
-            <a th:href="@{'/questionnaires/' + ${questionnaireId} + '/analysis'}"
-               href="analysis.html" class="btn btn-primary btn-lg">
-                <span class="glyphicon glyphicon-circle-arrow-right"></span> View Analysis
-            </a>
+        <div class="page-actions row">
+            <div class="col-md-6">
+                <a th:href="@{/}" href="../index.html" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-home"></span> Take Me Home
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a th:href="@{'/questionnaires/' + ${questionnaireId} + '/analysis'}"
+                   href="analysis.html" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-circle-arrow-right"></span> View Analysis
+                </a>
+            </div>
         </div>
     </div>
 </div><!-- /.container -->

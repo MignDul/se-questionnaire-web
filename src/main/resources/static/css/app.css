@@ -30,10 +30,6 @@
     margin-bottom: 15px;
 }
 
-.page-actions .btn {
-    margin-right: 10px;
-}
-
 .container-wrapper {
     padding: 40px 15px;
     text-align: center;
@@ -42,6 +38,18 @@
 .container-wrapper .title {
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.hyphenate {
+    /* Careful, this breaks the word wherever it is without a hyphen */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    /* Adds a hyphen where the word breaks */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
 }
 
 /* index.html
@@ -175,6 +183,7 @@ fieldset[disabled] p.form-control {
 }
 
 /* user/login.html
+ * user/register.html
 -------------------------------------------------- */
 
 .form-user {
@@ -226,6 +235,12 @@ fieldset[disabled] p.form-control {
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
+    .page-questionnaire-success .page-actions div:first-child {
+        text-align: right;
+    }
+    .page-questionnaire-success .page-actions div:last-child {
+        text-align: left;
+    }
     .nav-logout {
         padding-top: 14px;
         padding-bottom: 14px;
@@ -244,6 +259,9 @@ fieldset[disabled] p.form-control {
 @media (max-width: 768px) {
     .nav-divider {
         display: none;
+    }
+    .page-questionnaire-success .page-actions div:last-child {
+        margin-top: 10px;
     }
     .questionnaire-wrapper {
         width: auto;
