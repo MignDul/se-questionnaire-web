@@ -42,9 +42,14 @@
                         <button type="submit" class="nav-logout btn btn-link">Logout</button>
                     </form>
                 </li>
-                <li sec:authorize="isAnonymous()">
+                <!--/*/ <th:block sec:authorize="isAnonymous()"> /*/-->
+                <li>
+                    <a th:href="@{/login}" href="user/login.html">Login</a>
+                </li>
+                <li>
                     <a th:href="@{/register}" href="user/register.html">Register</a>
                 </li>
+                <!--/*/ </th:block> /*/-->
             </ul>
             <div class="nav-user-info navbar-right" sec:authorize="isAuthenticated()">
                 <img class="nav-avatar" th:src="@{/images/avatar.png}" src="../static/images/avatar.png"/>
