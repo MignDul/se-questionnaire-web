@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head ('Register')">
+    <title>Register</title>
+    <link type="text/css" href="../../static/css/bootstrap-3.3.7.min.css" rel="stylesheet"/>
+    <link type="text/css" href="../../static/css/app.css" rel="stylesheet"/>
+</head>
+<body class="page">
+<!-- Navigation bar
+    ================================================== -->
+<nav th:replace="fragments :: nav ('register')"></nav>
+
+<div class="container">
+    <form class="form-user" th:action="@{/register}" th:object="${user}" action="#" method="post">
+        <h2 class="form-user-heading">Please register</h2>
+
+        <!-- Error Message -->
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Validation error</p>
+        </div>
+
+        <input type="text" class="form-control" th:field="*{username}" placeholder="Username" autofocus="autofocus"/>
+        <input type="password" class="form-control form-user-middle" th:field="*{password}" placeholder="Password"/>
+        <input type="password" class="form-control" th:field="*{passwordConfirm}" placeholder="Confirm Password"/>
+        <button type="submit" class="btn btn-lg btn-success btn-block">Register</button>
+    </form>
+</div>
+
+<!--/*/ <th:block th:include="fragments :: assets"></th:block> /*/-->
+</body>
+</html>

@@ -177,21 +177,21 @@ fieldset[disabled] p.form-control {
 /* user/login.html
 -------------------------------------------------- */
 
-.form-login {
+.form-user {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }
 
-.form-login .form-login-heading, .form-login .checkbox {
+.form-user .form-user-heading, .form-user .checkbox {
     margin-bottom: 10px;
 }
 
-.form-login .checkbox {
+.form-user .checkbox {
     font-weight: normal;
 }
 
-.form-login .form-control {
+.form-user .form-control {
     position: relative;
     height: auto;
     -webkit-box-sizing: border-box;
@@ -201,20 +201,25 @@ fieldset[disabled] p.form-control {
     font-size: 16px;
 }
 
-.form-login .form-control:focus {
+.form-user .form-control:focus {
     z-index: 2;
 }
 
-.form-login input[type="text"] {
+.form-user input[type="text"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-login input[type="password"] {
+.form-user input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.form-user input.form-user-middle {
+    margin-bottom: -1px;
+    border-radius: 0;
 }
 
 /* Responsive CSS

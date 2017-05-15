@@ -8,11 +8,11 @@
 <body class="page">
 <!-- Navigation bar
     ================================================== -->
-<nav th:replace="fragments :: nav ('')"></nav>
+<nav th:replace="fragments :: nav ('login')"></nav>
 
 <div class="container">
-    <form class="form-login" th:action="@{/login}" action="#" method="post">
-        <h2 class="form-login-heading">Please login</h2>
+    <form class="form-user" th:action="@{/login}" action="#" method="post">
+        <h2 class="form-user-heading">Please login</h2>
 
         <p th:if="${param.logout}" class="alert alert-info">You have been logged out.</p>
         <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again.</p>
@@ -25,6 +25,10 @@
             </label>
         </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+
+        <div class="page-actions">
+            <a th:href="@{/register}" href="register.html" class="pull-right">Create New Account</a>
+        </div>
     </form>
 </div>
 
